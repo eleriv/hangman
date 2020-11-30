@@ -16,12 +16,24 @@ class State {
   }
 
   newGame(randomWord = randomWords()) {
-    this.randomWord = randomWord // Generated random word
-    this.randomWordChars = [] // Holds unique randomWord chars
-    this.hp = 10 // User's lives
-    this.win = false // If true then user has won the game
-    this.guesses = [] // Guesse'd words
-    this.guessesCount = 0 // Amount of guesses the user has made
+
+    // Generated random word
+    this.randomWord = randomWord
+
+    // Holds unique randomWord chars
+    this.randomWordChars = []
+
+    // User's lives
+    this.hp = 10
+
+    // If true then user has won the game
+    this.win = false
+
+    // Guessed words
+    this.guesses = []
+
+    // Amount of guesses the user has made
+    this.guessesCount = 0
 
     // Puts every unique randomWord's char into a string
     for (let i = 0; i < randomWord.length; i++) {
@@ -90,13 +102,14 @@ function playRound() {
   state.guesses.push(guess)
   state.guessesCount++
 
-  // Checks user's guess
-  // If the user guessed the whole word at once
+  // Checks user's guess. If the user guessed the whole word at once
   if (guess === state.randomWord) {
     state.win = true
+
   // If the guess was correct
   } else if (state.randomWordChars.includes(guess)) {
     const check = state.randomWordChars.every((char) => state.guesses.includes(char))
+
     // If the user has guessed every randomWord's char
     if (check) {
       state.win = true
@@ -104,15 +117,18 @@ function playRound() {
       console.log(`The letter ${guess} is in the secret word!`)
     }
   } else {
+
     // Gives user negative feedback
     if (guess.length > 1) {
       console.log(`${guess} is not the secret word!`)
     } else {
       console.log(`Character ${guess} is not in the secret word!`)
     }
+
     // Takes -1 hp
     state.hp--
   }
+
   // Ends the game when user guessed 'exit'
   if (guess === 'exit') state.hp = 0
 }
